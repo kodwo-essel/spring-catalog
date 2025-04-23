@@ -24,7 +24,7 @@ EXPOSE 8080
 # Environment variables (just for reference/documentation)
 ENV AWS_ACCESS_KEY=""
 ENV AWS_SECRET_KEY=""
-ENV AWS_REGION=""
+ENV S3_BUCKET_REGION=""
 ENV S3_BUCKET_NAME=""
 ENV DB_HOST=""
 ENV DB_PORT=""
