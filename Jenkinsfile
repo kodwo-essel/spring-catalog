@@ -6,11 +6,6 @@ pipeline {
         GIT_BRANCH = "master"
         STATE_FILE_ID = "tfvars-pilot-light-ecr"
         DOCKER_TAG = "backend-latest"
-        // These will be populated from terraform
-        PRIMARY_REGION = ""
-        SECONDARY_REGION = ""
-        ECR_REPO_NAME = ""
-        AWS_ACCOUNT_ID = ""
     }
 
     stages {
