@@ -50,31 +50,34 @@ pipeline {
 
         stage('Extract Terraform Variables') {
             steps {
-                script {
-                    // Extract variables from terraform.tfvars
-                    def tfvars = readFile('terraform.tfvars').trim()
+                dir('pilot-light-ecr'){
+                    script {
+                        // Extract variables from terraform.tfvars
+                        def tfvars = readFile('terraform.tfvars').trim()
 
-                    // Parse primary_region
-                    def primaryRegionMatch = tfvars =~ /primary_region\s*=\s*"([^"]+)"/
-                    if (primaryRegionMatch) {
-                        env.PRIMARY_REGION = primaryRegionMatch[0][1]
-                        echo "Primary Region: ${env.PRIMARY_REGION}"
-                    }
+                        // Parse primary_region
+                        def primaryRegionMatch = tfvars =~ /primary_region\s*=\s*"([^"]+)"/
+                        if (primaryRegionMatch) {
+                            env.PRIMARY_REGION = primaryRegionMatch[0][1]
+                            echo "Primary Region: ${env.PRIMARY_REGION}"
+                        }
 
-                    // Parse secondary_region
-                    def secondaryRegionMatch = tfvars =~ /secondary_region\s*=\s*"([^"]+)"/
-                    if (secondaryRegionMatch) {
-                        env.SECONDARY_REGION = secondaryRegionMatch[0][1]
-                        echo "Secondary Region: ${env.SECONDARY_REGION}"
-                    }
+                        // Parse secondary_region
+                        def secondaryRegionMatch = tfvars =~ /secondary_region\s*=\s*"([^"]+)"/
+                        if (secondaryRegionMatch) {
+                            env.SECONDARY_REGION = secondaryRegionMatch[0][1]
+                            echo "Secondary Region: ${env.SECONDARY_REGION}"
+                        }
 
-                    // Parse ecr_name
-                    def ecrNameMatch = tfvars =~ /ecr_name\s*=\s*"([^"]+)"/
-                    if (ecrNameMatch) {
-                        env.ECR_REPO_NAME = ecrNameMatch[0][1]
-                        echo "ECR Repository Name: ${env.ECR_REPO_NAME}"
+                        // Parse ecr_name
+                        def ecrNameMatch = tfvars =~ /ecr_name\s*=\s*"([^"]+)"/
+                        if (ecrNameMatch) {
+                            env.ECR_REPO_NAME = ecrNameMatch[0][1]
+                            echo "ECR Repository Name: ${env.ECR_REPO_NAME}"
+                        }
                     }
                 }
+
             }
         }
 
