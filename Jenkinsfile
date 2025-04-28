@@ -40,11 +40,14 @@ pipeline {
 
         stage('Inject terraform.tfvars') {
             steps {
-                withCredentials([file(credentialsId: "${STATE_FILE_ID}", variable: 'TFVARS_FILE')]) {
-                    sh "cp -f \"${TFVARS_FILE}\" terraform.tfvars"
-                    sh "ls -la"
-                    echo 'terraform.tfvars injected.'
+                dir('pilot-light-ecr') {
+                    withCredentials([file(credentialsId: "${STATE_FILE_ID}", variable: 'TFVARS_FILE')]) {
+                        sh "cp -f \"${TFVARS_FILE}\" terraform.tfvars"
+                        sh "ls -la"
+                        echo 'terraform.tfvars injected.'
+                    }
                 }
+
             }
         }
 
