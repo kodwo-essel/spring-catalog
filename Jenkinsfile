@@ -29,29 +29,6 @@ pipeline {
             }
         }
 
-        stage('Checkout State Lock Terraform'){
-            steps {
-                dir('state-lock-terraform') {
-                    git branch: "main", url: 'https://github.com/kodwo-essel/ecr_state_locking'
-                }
-            }
-        }
-
-        stage('Ensure availability of state lock file') {
-            steps {
-                dir('state-lock-terraform') {
-                    withCredentials([aws(credentialsId: "aws-credentials")]){
-                        script {
-                            // Now Terraform has AWS credentials
-                            sh 'terraform init'
-                            sh 'terraform plan -out=tfplan'
-                            sh 'terraform apply -auto-approve tfplan'
-                        }
-                    }
-                }
-            }
-        }
-
 
         stage('Checkout ECR Repository'){
             steps {
