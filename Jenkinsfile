@@ -16,20 +16,20 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    // Use Maven to install dependencies for Spring Boot
-                    sh 'mvn clean install'  // Use 'gradle build' if you are using Gradle
-                }
-            }
-        }
+//         stage('Install Dependencies') {
+//             steps {
+//                 script {
+//                     // Use Maven to install dependencies for Spring Boot
+//                     sh 'mvn clean install'  // Use 'gradle build' if you are using Gradle
+//                 }
+//             }
+//         }
 
         stage('Build Application') {
             steps {
                 script {
                     // Build the Spring Boot application (package the JAR)
-                    sh 'mvn package -DskipTests'  // Skipping tests for faster builds, change if needed
+                    sh 'mvn clean package -DskipTests'  // Skipping tests for faster builds, change if needed
                 }
             }
         }
