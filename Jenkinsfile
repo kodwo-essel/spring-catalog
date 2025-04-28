@@ -98,6 +98,7 @@ pipeline {
 
                     script {
                         def awsAccountId = sh(script: 'aws sts get-caller-identity --query Account --output text', returnStdout: true).trim()
+                            echo "AWS: ${awsAccountId}"
                         if (awsAccountId) {
                             env.AWS_ACCOUNT_ID = awsAccountId
                             echo "AWS Account ID: ${env.AWS_ACCOUNT_ID}"
