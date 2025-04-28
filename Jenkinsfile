@@ -62,8 +62,7 @@ pipeline {
                         def primaryRegionMatch = tfvars =~ /primary_region\s*=\s*"([^"]+)"/
                         if (primaryRegionMatch) {
                             def primaryRegion = primaryRegionMatch[0][1]
-                            echo "Primary region ${primaryRegion}"
-                            sh "export PRIMARY_REGION=${primaryRegion}"
+                            env.PRIMARY_REGION = primaryRegion
                             echo "Primary Region: ${env.PRIMARY_REGION}"
                         }
 
