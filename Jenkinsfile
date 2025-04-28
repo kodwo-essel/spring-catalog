@@ -97,9 +97,13 @@ pipeline {
                     }
 
                     script {
-                        // Get AWS account ID
-                        env.AWS_ACCOUNT_ID = sh(script: 'aws sts get-caller-identity --query "Account" --output text', returnStdout: true).trim()
-                        echo "AWS Account ID: ${env.AWS_ACCOUNT_ID}"
+                        def awsAccountId = sh(script: 'aws sts get-caller-identity --query Account --output text', returnStdout: true).trim()
+                        if (awsAccountId) {
+                            env.AWS_ACCOUNT_ID = awsAccountId
+                            echo "AWS Account ID: ${env.AWS_ACCOUNT_ID}"
+                        } else {
+                            error "Failed to retrieve AWS Account ID. Check AWS credentials and permissions."
+                        }
                     }
                 }
             }
